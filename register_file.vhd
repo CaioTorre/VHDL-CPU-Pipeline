@@ -22,12 +22,6 @@ begin
 	begin
 		if (clock'EVENT and clock = '1' and regwrite = '1') then
 			registers(to_integer(unsigned(write_register))) <= write_data;
-			-- if (read_register_1 = write_register) then 
-				-- read_data_1 <= write_data;
-			-- end if;
-			-- if (read_register_2 = write_register) then 
-				-- read_data_2 <= write_data;
-			-- end if;
 		end if;
 	end process;
 	
