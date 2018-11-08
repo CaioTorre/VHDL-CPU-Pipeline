@@ -1,0 +1,24 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
+
+entity pipelineRegIFID is
+	port (clock:		in		std_logic;
+			in_instr:	in		std_logic_vector(0 to 31);
+			in_pc:		in		std_logic_vector(0 to 31);
+			out_instr:	out	std_logic_vector(0 to 31);
+			out_pc:		out	std_logic_vector(0 to 31));
+end pipelineRegIFID;
+
+architecture a of pipelineRegIFID is
+
+begin
+	process(clock)
+	begin
+		if (clock'EVENT and clock = '1') then
+			out_instr <= in_instr;
+			out_pc <= in_pc;
+		end if;
+	end process;
+end;
