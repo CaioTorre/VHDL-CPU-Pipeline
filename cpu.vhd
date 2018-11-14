@@ -23,7 +23,7 @@ architecture a of cpu is
 				clock: in std_logic;
 				read_register_1:	in  std_logic_vector(0 to 4);
 				read_register_2:	in  std_logic_vector(0 to 4);
-				write_register:		in  std_logic_vector(0 to 4);
+				write_register:	in  std_logic_vector(0 to 4);
 				write_data:			in  std_logic_vector(0 to 31);
 				read_data_1: 		out std_logic_vector(0 to 31);
 				read_data_2: 		out std_logic_vector(0 to 31));
@@ -31,28 +31,28 @@ architecture a of cpu is
 	
 	component data_mem
 		port	(address:	in  std_logic_vector(0 to 31);
-				clock:		in std_logic;
-				mem_write:	in std_logic;
+				clock:		in  std_logic;
+				mem_write:	in  std_logic;
 				write_data:	in  std_logic_vector(0 to 31);
-				mem_read:	in 	std_logic;
+				mem_read:	in  std_logic;
 				read_data:	out std_logic_vector(0 to 31));
 	end component;
 	
 	component adder
 		port	(a:	in  std_logic_vector(0 to 31);
-				b:	in  std_logic_vector(0 to 31);
-				g:	out std_logic_vector(0 to 31));
+				b:		in  std_logic_vector(0 to 31);
+				g:		out std_logic_vector(0 to 31));
 	end component;
 	
 	component mux21_32 is
-		port	(a:		in  std_logic_vector(0 to 31);
+		port	(a:	in  std_logic_vector(0 to 31);
 				b:		in  std_logic_vector(0 to 31);
 				sel:	in  std_logic;
 				g:		out std_logic_vector(0 to 31));
 	end component;
 	
 	component mux21_5 is
-		port	(a:		in  std_logic_vector(0 to 4);
+		port	(a:	in  std_logic_vector(0 to 4);
 				b:		in  std_logic_vector(0 to 4);
 				sel:	in  std_logic;
 				g:		out std_logic_vector(0 to 4));
@@ -70,26 +70,94 @@ architecture a of cpu is
 	end component;
 
 	component shift_left_2 is
-		port	(a: in  std_logic_vector(0 to 31);
+		port	(a: 	in  std_logic_vector(0 to 31);
 				 b:	out std_logic_vector(0 to 31));
 	end component;
 	
 	component ula is
-		port (regA: in std_logic_vector(0 to 31);
-				regB: in std_logic_vector(0 to 31);
-				op:	in std_logic_vector(0 to  1);
+		port (regA: 	in  std_logic_vector(0 to 31);
+				regB: 	in  std_logic_vector(0 to 31);
+				op:		in  std_logic_vector(0 to  1);
 				ula_out: out std_logic_vector(0 to 31);
-				zero: out std_logic);
+				zero: 	out std_logic);
 	end component;
 	
+	--========== REGISTRADORES DE PIPELINE ==========
 	component pipelineRegIFID is
-		port (clock:		in		std_logic;
-			in_instr:	in		std_logic_vector(0 to 31);
+		port (clock:	in		std_logic;
+	
 			in_pc:		in		std_logic_vector(0 to 31);
-			out_instr:	out	std_logic_vector(0 to 31);
-			out_pc:		out	std_logic_vector(0 to 31));
+			out_pc:		out	std_logic_vector(0 to 31);
+			
+			in_instr:	in		std_logic_vector(0 to 31);
+			out_instr:	out	std_logic_vector(0 to 31));
+	end component;
+	
+	component pipelineRegIDEX is
+		port (clock:	in		std_logic;
+			in_WB:		in		std_logic_vector(0 to 1);
+			in_ME:		in		std_logic_vector(0 to 2);
+			in_EX:		in		std_logic_vector(0 to 2);
+			out_WB:		out	std_logic_vector(0 to 1);
+			out_ME:		out	std_logic_vector(0 to 2);
+			out_EX:		out	std_logic_vector(0 to 2);
+			
+			in_pc:		in		std_logic_vector(0 to 31);
+			out_pc:		out	std_logic_vector(0 to 31);
+			
+			in_read1:	in		std_logic_vector(0 to 31);
+			out_read1:	out	std_logic_vector(0 to 31);
+			
+			in_read2:	in		std_logic_vector(0 to 31);
+			out_read2:	out	std_logic_vector(0 to 31);
+			
+			in_imed:		in		std_logic_vector(0 to 31);
+			out_imed:	out	std_logic_vector(0 to 31);
+			
+			in_rt:		in		std_logic_vector(0 to 4);
+			out_rt:		out	std_logic_vector(0 to 4);
+			in_rd:		in		std_logic_vector(0 to 4);
+			out_rd:		out	std_logic_vector(0 to 4));
+	end component;
+	
+	component pipelineRegEXMEM is
+		port (clock:	in		std_logic;
+			in_WB:		in		std_logic_vector(0 to 1);
+			in_ME:		in		std_logic_vector(0 to 2);
+			out_WB:		out	std_logic_vector(0 to 1);
+			out_ME:		out	std_logic_vector(0 to 2);
+			
+			in_pc:		in		std_logic_vector(0 to 31);
+			out_pc:		out	std_logic_vector(0 to 31);
+			
+			in_zero:		in		std_logic;
+			out_zero:	out	std_logic;
+			
+			in_result:	in		std_logic_vector(0 to 31);
+			out_result:	out	std_logic_vector(0 to 31);
+			
+			in_wrData:	in		std_logic_vector(0 to 31);
+			out_wrData:	out	std_logic_vector(0 to 31);
+			
+			in_regdst:	in		std_logic_vector(0 to 4);
+			out_regdst:	out	std_logic_vector(0 to 4));
 	end component;
 
+	component pipelineRegMEMWB is
+		port (clock:	in		std_logic;
+			in_WB:		in		std_logic_vector(0 to 1);
+			out_WB:		out	std_logic_vector(0 to 1);
+			
+			in_rdData:	in		std_logic_vector(0 to 31);
+			out_rdData:	out	std_logic_vector(0 to 31);
+			
+			in_addr:		in		std_logic_vector(0 to 31);
+			out_addr:	out	std_logic_vector(0 to 31);
+			
+			in_regdst:	in		std_logic_vector(0 to 4);
+			out_regdst:	out	std_logic_vector(0 to 4));
+	end component;
+	
 	--signal clock:				std_logic;
 	--========== SINAIS INSTRUCTION FETCH ==========
 	signal pc_instr_mem:		std_logic_vector(0 to 31);
@@ -170,7 +238,7 @@ begin
 	pc:						program_counter	port map (clock, pc_update, pc_instr_mem);
 
 	--========== REGISTRADOR IF/ID ==========
-	ifid:	pipelineRegIFID	port map (clock, instr_mem_ifid, add_pcsrc_mux_0, Instruction, pc_mais_quatro_ID);
+	ifid:	pipelineRegIFID	port map (clock, add_pcsrc_mux_0, pc_mais_quatro_ID, instr_mem_ifid, Instruction);
 	
 	--========== COMPONENTES INSTRUCTION DECODE ==========
 	OPCode				<= Instruction( 0 to  5);
@@ -180,6 +248,7 @@ begin
 	Imediato				<= Instruction(16 to 31);
 	Rt_ID					<= Instruction(11 to 15);
 	Rd_ID					<= Instruction(16 to 20);
+	
 	registers:			register_file	port map (RegWrite, clock, Read_Register_1, Read_Register_2, Write_Register, Write_Data, Read_Data_1, Read_Data_2);
 	dec_sign_extend:	sign_extend		port map (Imediato, Imediato_ext_ID);
 	jumptype_mux:		mux21_32			port map (Jump_concat, Read_Data_1, JumpType, pcselect_mux_1);
