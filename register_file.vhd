@@ -20,7 +20,7 @@ architecture regs of register_file is
 begin
 	process(clock)
 	begin
-		if (clock'EVENT and clock = '1' and regwrite = '1') then
+		if (clock'EVENT and clock = '1' and regwrite = '1' and not (write_register = "00000") ) then
 			registers(to_integer(unsigned(write_register))) <= write_data;
 		end if;
 	end process;

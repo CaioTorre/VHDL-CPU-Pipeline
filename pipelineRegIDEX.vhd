@@ -7,10 +7,10 @@ entity pipelineRegIDEX is
 	port (clock:		in		std_logic;
 			in_WB:		in		std_logic_vector(0 to 1);
 			in_ME:		in		std_logic_vector(0 to 2);
-			in_EX:		in		std_logic_vector(0 to 2);
+			in_EX:		in		std_logic_vector(0 to 3);
 			out_WB:		out	std_logic_vector(0 to 1);
 			out_ME:		out	std_logic_vector(0 to 2);
-			out_EX:		out	std_logic_vector(0 to 2);
+			out_EX:		out	std_logic_vector(0 to 3);
 			
 			in_pc:		in		std_logic_vector(0 to 31);
 			out_pc:		out	std_logic_vector(0 to 31);
