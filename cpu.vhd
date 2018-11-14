@@ -223,9 +223,9 @@ architecture a of cpu is
 	signal ALUSrc:					std_logic;
 	signal alusrc_mux_0:			std_logic_vector(0 to 31);
 	signal alusrc_mux_1:			std_logic_vector(0 to 31);
-	signal ULA_Op:					std_logic_vector(0 to 2);
+	signal ULA_Op:					std_logic_vector(0 to 1);
 	
-	signal ULA_Control_Op:		std_logic_vector(0 to 1);
+	--signal ULA_Control_Op:		std_logic_vector(0 to 1);
 	signal RegDst:					std_logic;
 	signal regdst_mux_0:			std_logic_vector(0 to 4);
 	signal regdst_mux_1:			std_logic_vector(0 to 4);
@@ -285,6 +285,8 @@ begin
 	shift_jump:			shift_left_2	port map (Instruction, Jump_imed_x_quatro);
 	Jump_concat <= pc_mais_quatro_ID(0 to 3) & Jump_imed_x_quatro(4 to 31);
 	
+	ctrl:					ControlUnit		port map (OPCode, PCSrc, JumpType, ctrl_WB_ID, ctrl_ME_ID, ctrl_EX_ID);
+	
 	--========== REGISTRADOR ID/EX ==========
 	idex:	pipelineRegIDEX	port map (clock, 
 												ctrl_WB_ID, ctrl_ME_ID, ctrl_EX_ID,
@@ -292,7 +294,7 @@ begin
 												pc_mais_quatro_ID, pc_mais_quatro_EX, 
 												Read_Data_1, ULA_Src_A,
 												Read_Data_2, alusrc_mux_0,
-												Imediato_ext_ID, Imediato_ext_EX
+												Imediato_ext_ID, Imediato_ext_EX,
 												Rt_ID, regdst_mux_0,
 												Rd_ID, regdst_mux_1);
 	
