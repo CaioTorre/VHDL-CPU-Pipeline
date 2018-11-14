@@ -5,11 +5,11 @@ use ieee.numeric_std.all;
 
 entity ControlUnit is
 	port (opcode:	in  std_logic_vector(0 to 5);
-			pcsrc:	out std_logic;
-			jmptp:	out std_logic;
-			wb:		out std_logic_vector(0 to 1);
-			mem:		out std_logic_vector(0 to 2);
-			ex:		out std_logic_vector(0 to 3));
+			pcsrc:	out std_logic := '0';
+			jmptp:	out std_logic := '0';
+			wb:		out std_logic_vector(0 to 1) := "00";
+			mem:		out std_logic_vector(0 to 2) := "000";
+			ex:		out std_logic_vector(0 to 3) := "0000");
 end ControlUnit;
 
 architecture ctrl of ControlUnit is
@@ -18,7 +18,7 @@ begin
 	begin
 		case opcode is
 			when "000000" => -- NOP
-				pcsrc			<= '1';
+				pcsrc			<= '0';
 				mem(2)		<= '0';
 				mem(0)		<= '0';
 				wb(1)			<= '0';
@@ -147,7 +147,7 @@ begin
 				wb(1)			<= '0';
 			
 			when others => 
-				pcsrc			<= '1';
+				pcsrc			<= '0';
 				mem(2)		<= '0';
 				mem(0)		<= '0';
 				wb(1)			<= '0';

@@ -7,23 +7,23 @@ entity pipelineRegEXMEM is
 	port (clock:		in		std_logic;
 			in_WB:		in		std_logic_vector(0 to 1);
 			in_ME:		in		std_logic_vector(0 to 2);
-			out_WB:		out	std_logic_vector(0 to 1);
-			out_ME:		out	std_logic_vector(0 to 2);
+			out_WB:		out	std_logic_vector(0 to 1) := "00";
+			out_ME:		out	std_logic_vector(0 to 2) := "000";
 			
 			in_pc:		in		std_logic_vector(0 to 31);
-			out_pc:		out	std_logic_vector(0 to 31);
+			out_pc:		out	std_logic_vector(0 to 31) := "00000000000000000000000000000000";
 			
 			in_zero:		in		std_logic;
-			out_zero:	out	std_logic;
+			out_zero:	out	std_logic := '0';
 			
 			in_result:	in		std_logic_vector(0 to 31);
-			out_result:	out	std_logic_vector(0 to 31);
+			out_result:	out	std_logic_vector(0 to 31) := "00000000000000000000000000000000";
 			
 			in_wrData:	in		std_logic_vector(0 to 31);
-			out_wrData:	out	std_logic_vector(0 to 31);
+			out_wrData:	out	std_logic_vector(0 to 31) := "00000000000000000000000000000000";
 			
 			in_regdst:	in		std_logic_vector(0 to 4);
-			out_regdst:	out	std_logic_vector(0 to 4));
+			out_regdst:	out	std_logic_vector(0 to 4) := "00000");
 end pipelineRegEXMEM;
 
 architecture a of pipelineRegEXMEM is

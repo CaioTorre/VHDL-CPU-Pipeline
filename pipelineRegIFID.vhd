@@ -7,10 +7,10 @@ entity pipelineRegIFID is
 	port (clock:		in		std_logic;
 	
 			in_pc:		in		std_logic_vector(0 to 31);
-			out_pc:		out	std_logic_vector(0 to 31);
+			out_pc:		out	std_logic_vector(0 to 31) := "00000000000000000000000000000000";
 			
 			in_instr:	in		std_logic_vector(0 to 31);
-			out_instr:	out	std_logic_vector(0 to 31));
+			out_instr:	out	std_logic_vector(0 to 31) := "00000000000000000000000000000000");
 end pipelineRegIFID;
 
 architecture a of pipelineRegIFID is

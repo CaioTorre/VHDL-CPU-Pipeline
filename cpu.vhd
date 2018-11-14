@@ -4,7 +4,9 @@ use ieee.std_logic_unsigned.all;
 use ieee.numeric_std.all;
 
 entity cpu is
-	port(clock:in std_logic);
+	port(clock:in std_logic;
+			current_pc:	out std_logic_vector(0 to 31);
+			current_instr: out std_logic_vector(0 to 31));
 			--address:	in  std_logic_vector(0 to 31);
 			--mem_write:	in std_logic;
 			--write_data:	in  std_logic_vector(0 to 31);
