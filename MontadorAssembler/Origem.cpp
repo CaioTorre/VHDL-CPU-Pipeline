@@ -18,7 +18,7 @@ void main()
 	char tipo;
 	int reg1, reg2, reg3, imed;
 	int linha = 0;
-	FILE *p = fopen("codigo.txt", "a");
+	FILE *p = fopen("codigo.txt", "a+");
 	
 	do
 	{
