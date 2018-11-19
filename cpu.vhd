@@ -5,13 +5,51 @@ use ieee.numeric_std.all;
 
 entity cpu is
 	port(clock:in std_logic;
-			current_pc:	out std_logic_vector(0 to 31);
-			current_instr: out std_logic_vector(0 to 31));
-			--address:	in  std_logic_vector(0 to 31);
-			--mem_write:	in std_logic;
-			--write_data:	in  std_logic_vector(0 to 31);
-			--mem_read:	in 	std_logic;
-			--read_data:	out std_logic_vector(0 to 31));
+			deb_current_pc:	out std_logic_vector(0 to 31);
+			deb_current_instr: out std_logic_vector(0 to 31);
+			deb_regfile_all_0:	out std_logic_vector(0 to 31);
+			deb_regfile_all_1:	out std_logic_vector(0 to 31);
+			deb_regfile_all_2:	out std_logic_vector(0 to 31);
+			deb_regfile_all_3:	out std_logic_vector(0 to 31);
+			deb_regfile_all_4:	out std_logic_vector(0 to 31);
+			deb_alu_result:		out std_logic_vector(0 to 31);
+			deb_write_data:		out std_logic_vector(0 to 31);
+			deb_alu_src_a:			out std_logic_vector(0 to 31);
+			deb_alu_src_b:			out std_logic_vector(0 to 31);
+			deb_alu_op:				out std_logic_vector(0 to 1);
+			deb_alu_src:			out std_logic);
+--			deb_regfile_all_5:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_6:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_7:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_8:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_9:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_10:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_11:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_12:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_13:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_14:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_15:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_16:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_17:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_18:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_19:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_20:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_21:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_22:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_23:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_24:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_25:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_26:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_27:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_28:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_29:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_30:	out std_logic_vector(0 to 31);
+--			deb_regfile_all_31:	out std_logic_vector(0 to 31));
+--			address:	in  std_logic_vector(0 to 31);
+--			mem_write:	in std_logic;
+--			write_data:	in  std_logic_vector(0 to 31);
+--			mem_read:	in 	std_logic;
+--			read_data:	out std_logic_vector(0 to 31));
 end cpu;
 
 architecture a of cpu is
@@ -28,7 +66,39 @@ architecture a of cpu is
 				write_register:	in  std_logic_vector(0 to 4);
 				write_data:			in  std_logic_vector(0 to 31);
 				read_data_1: 		out std_logic_vector(0 to 31);
-				read_data_2: 		out std_logic_vector(0 to 31));
+				read_data_2: 		out std_logic_vector(0 to 31);
+				deb_regfile_0:		out std_logic_vector(0 to 31);
+				deb_regfile_1:		out std_logic_vector(0 to 31);
+				deb_regfile_2:		out std_logic_vector(0 to 31);
+				deb_regfile_3:		out std_logic_vector(0 to 31);
+				deb_regfile_4:		out std_logic_vector(0 to 31));
+--				deb_regfile_5:		out std_logic_vector(0 to 31);
+--				deb_regfile_6:		out std_logic_vector(0 to 31);
+--				deb_regfile_7:		out std_logic_vector(0 to 31);
+--				deb_regfile_8:		out std_logic_vector(0 to 31);
+--				deb_regfile_9:		out std_logic_vector(0 to 31);
+--				deb_regfile_10:	out std_logic_vector(0 to 31);
+--				deb_regfile_11:	out std_logic_vector(0 to 31);
+--				deb_regfile_12:	out std_logic_vector(0 to 31);
+--				deb_regfile_13:	out std_logic_vector(0 to 31);
+--				deb_regfile_14:	out std_logic_vector(0 to 31);
+--				deb_regfile_15:	out std_logic_vector(0 to 31);
+--				deb_regfile_16:	out std_logic_vector(0 to 31);
+--				deb_regfile_17:	out std_logic_vector(0 to 31);
+--				deb_regfile_18:	out std_logic_vector(0 to 31);
+--				deb_regfile_19:	out std_logic_vector(0 to 31);
+--				deb_regfile_20:	out std_logic_vector(0 to 31);
+--				deb_regfile_21:	out std_logic_vector(0 to 31);
+--				deb_regfile_22:	out std_logic_vector(0 to 31);
+--				deb_regfile_23:	out std_logic_vector(0 to 31);
+--				deb_regfile_24:	out std_logic_vector(0 to 31);
+--				deb_regfile_25:	out std_logic_vector(0 to 31);
+--				deb_regfile_26:	out std_logic_vector(0 to 31);
+--				deb_regfile_27:	out std_logic_vector(0 to 31);
+--				deb_regfile_28:	out std_logic_vector(0 to 31);
+--				deb_regfile_29:	out std_logic_vector(0 to 31);
+--				deb_regfile_30:	out std_logic_vector(0 to 31);
+--				deb_regfile_31:	out std_logic_vector(0 to 31));
 	end component;
 	
 	component data_mem
@@ -260,6 +330,16 @@ architecture a of cpu is
 	signal ctrl_WB_WB:			std_logic_vector(0 to 1);
 	
 begin 
+	--========== PASSAGEM DE SINAIS PARA DEBUG ==========
+	deb_current_pc <= pc_instr_mem;
+	deb_current_instr <= instr_mem_ifid;
+	deb_alu_result <= ULA_Result;
+	deb_write_data <= Write_Data;
+	deb_alu_src_a <= ULA_Src_A;
+	deb_alu_src_b <= ULA_Src_B;
+	deb_alu_op <= ULA_Op;
+	deb_alu_src <= ALUSrc;
+	
 	--========== COMPONENTES INSTRUCTION FETCH ==========
 	instruction_memory:	instr_mem			port map (pc_instr_mem, instr_mem_ifid);
 	add_pc_mais_quatro:	adder					port map (pc_instr_mem, "00000000000000000000000000000100", add_pcsrc_mux_0);
@@ -280,7 +360,11 @@ begin
 	Rt_ID					<= Instruction(11 to 15);
 	Rd_ID					<= Instruction(16 to 20);
 	
-	registers:			register_file	port map (RegWrite, clock, Read_Register_1, Read_Register_2, Write_Register, Write_Data, Read_Data_1, Read_Data_2);
+	registers:			register_file	port map (RegWrite, clock, Read_Register_1, Read_Register_2, Write_Register, Write_Data, Read_Data_1, Read_Data_2,
+																deb_regfile_all_0,  deb_regfile_all_1,  deb_regfile_all_2,  deb_regfile_all_3,  deb_regfile_all_4);--,  deb_regfile_all_5);--,  deb_regfile_all_6,  deb_regfile_all_7,
+--																deb_regfile_all_8,  deb_regfile_all_9,  deb_regfile_all_10, deb_regfile_all_11, deb_regfile_all_12, deb_regfile_all_13, deb_regfile_all_14, deb_regfile_all_15,
+--																deb_regfile_all_16, deb_regfile_all_17, deb_regfile_all_18, deb_regfile_all_19, deb_regfile_all_20, deb_regfile_all_21, deb_regfile_all_22, deb_regfile_all_23,
+--																deb_regfile_all_24, deb_regfile_all_25, deb_regfile_all_26, deb_regfile_all_27, deb_regfile_all_28, deb_regfile_all_29, deb_regfile_all_30, deb_regfile_all_31);
 	dec_sign_extend:	sign_extend		port map (Imediato, Imediato_ext_ID);
 	jumptype_mux:		mux21_32			port map (Jump_concat, Read_Data_1, JumpType, pcselect_mux_1);
 	pcsrc_mux:			mux21_32			port map (pcselect_mux_0, pcselect_mux_1, PCSrc, pc_update);
