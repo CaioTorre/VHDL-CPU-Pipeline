@@ -17,7 +17,12 @@ entity cpu is
 			deb_alu_src_a:			out std_logic_vector(0 to 31);
 			deb_alu_src_b:			out std_logic_vector(0 to 31);
 			deb_alu_op:				out std_logic_vector(0 to 1);
-			deb_alu_src:			out std_logic);
+			deb_alu_src:			out std_logic;
+			deb_ctrl_signals:		out std_logic_vector(0 to 10);
+			deb_signals_ex:		out std_logic_vector(0 to 8);
+			deb_signals_me:		out std_logic_vector(0 to 4);
+			deb_signals_wb:		out std_logic_vector(0 to 1);
+			deb_imed_ext_ex:		out std_logic_vector(0 to 31));
 --			deb_regfile_all_5:	out std_logic_vector(0 to 31);
 --			deb_regfile_all_6:	out std_logic_vector(0 to 31);
 --			deb_regfile_all_7:	out std_logic_vector(0 to 31);
@@ -339,6 +344,11 @@ begin
 	deb_alu_src_b <= ULA_Src_B;
 	deb_alu_op <= ULA_Op;
 	deb_alu_src <= ALUSrc;
+	deb_ctrl_signals <= PCSrc & JumpType & ctrl_WB_ID & ctrl_ME_ID & ctrl_EX_ID;
+	deb_signals_ex <= ctrl_WB_EX & ctrl_ME_EX & ctrl_EX_EX;
+	deb_signals_me <= ctrl_WB_ME & ctrl_ME_ME;
+	deb_signals_wb <= ctrl_WB_WB;
+	deb_imed_ext_ex <= alusrc_mux_1;
 	
 	--========== COMPONENTES INSTRUCTION FETCH ==========
 	instruction_memory:	instr_mem			port map (pc_instr_mem, instr_mem_ifid);
@@ -392,9 +402,14 @@ begin
 	regdst_mux:			mux21_5			port map (regdst_mux_0, regdst_mux_1, RegDst, regdst_mux_out);
 	shift_exec:			shift_left_2	port map (Imediato_ext_EX, imed_ext_x_quatro);
 	
-	ALUSrc <= ctrl_EX_EX(0);
-	ULA_Op <= ctrl_EX_EX(1 to 2);
-	RegDst <= ctrl_EX_EX(3);
+	alusrc_mux_1 <= Imediato_ext_EX;
+	
+	process(ctrl_EX_EX)
+	begin
+		ALUSrc <= ctrl_EX_EX(0);
+		ULA_Op <= ctrl_EX_EX(1 to 2);
+		RegDst <= ctrl_EX_EX(3);
+	end process;
 
 	--========== REGISTRADOR EX/MEM ==========
 	exme:	pipelineRegEXMEM	port map (clock, 
