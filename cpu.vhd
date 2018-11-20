@@ -22,7 +22,9 @@ entity cpu is
 			deb_signals_ex:		out std_logic_vector(0 to 8);
 			deb_signals_me:		out std_logic_vector(0 to 4);
 			deb_signals_wb:		out std_logic_vector(0 to 1);
-			deb_imed_ext_ex:		out std_logic_vector(0 to 31));
+			deb_imed_ext_ex:		out std_logic_vector(0 to 31);
+			deb_read_data_1:		out std_logic_vector(0 to 31);
+			deb_read_data_2:		out std_logic_vector(0 to 31));
 --			deb_regfile_all_5:	out std_logic_vector(0 to 31);
 --			deb_regfile_all_6:	out std_logic_vector(0 to 31);
 --			deb_regfile_all_7:	out std_logic_vector(0 to 31);
@@ -349,6 +351,8 @@ begin
 	deb_signals_me <= ctrl_WB_ME & ctrl_ME_ME;
 	deb_signals_wb <= ctrl_WB_WB;
 	deb_imed_ext_ex <= alusrc_mux_1;
+	deb_read_data_1 <= Read_Data_1;
+	deb_read_data_2 <= Read_Data_2;
 	
 	--========== COMPONENTES INSTRUCTION FETCH ==========
 	instruction_memory:	instr_mem			port map (pc_instr_mem, instr_mem_ifid);
