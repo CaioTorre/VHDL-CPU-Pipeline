@@ -9,7 +9,7 @@ void converteJ(char[], int);
 void converteJr(char[], int);
 void printa(char[], int*);
 void completaInstruction(char[]);
-void salvaArquivo(FILE*, char[], int*);
+void salvaArquivo(FILE*, char[], int*, char[], int reg1, int reg2, int reg3);
 
 void main()
 {
@@ -18,8 +18,7 @@ void main()
 	char tipo;
 	int reg1, reg2, reg3, imed;
 	int linha = 0;
-	FILE *p = fopen("codigo.txt", "a+");
-	
+	FILE *p = fopen("codigo.txt", "w");
 	do
 	{
 		scanf("%s", i);
@@ -89,34 +88,39 @@ void main()
 			strcpy(r, "001101");
 			tipo = 'g';
 		}
+		else if (strcmp(i, "nop") == 0)
+		{
+			strcpy(r, "000000");
+			tipo = 'r';
+		}
 		else
 			break;
 
 		switch (tipo)
 		{
 		case 'r':
-			scanf("%i,%i,%i", &reg1, &reg2, &reg3);
-			converteReg(r, reg1);
+			scanf("%i,%i,%i", &reg1, &reg2, &reg3); //rd rs rt
 			converteReg(r, reg2);
 			converteReg(r, reg3);
-		break;
+			converteReg(r, reg1);
+			break;
 		case 'i':
 			scanf("%i,%i,%i", &reg1, &reg2, &imed);
-			converteReg(r, reg1);
 			converteReg(r, reg2);
+			converteReg(r, reg1);
 			converteImed(r, imed);
-		break;
+			break;
 		case 'm':
 			scanf("%i,%i(%i)", &reg1, &imed, &reg2);
-			converteReg(r, reg1);
 			converteReg(r, reg2);
+			converteReg(r, reg1);
 			converteImed(r, imed);
-		break;
+			break;
 		case 'j':
 			scanf("%i", &imed);
 			converteJ(r, imed);
 
-		break;
+			break;
 		case 'g':
 			scanf("%i", &reg1);
 			converteJr(r, reg1);
@@ -127,7 +131,7 @@ void main()
 		completaInstruction(r);
 
 		//printa(r, &linha);
-		salvaArquivo(p, r, &linha);
+		salvaArquivo(p, r, &linha, i, reg1, reg2, reg3);
 
 	} while (true);
 
@@ -143,7 +147,7 @@ void converteReg(char instruction[], int r)
 	int i;
 
 	_itoa(r, aux, 2);
-	
+
 	for (i = strlen(aux); i < 5; i++)
 		strcat(instruction, "0");
 
@@ -158,7 +162,7 @@ void converteImed(char instruction[], int r)
 
 	_itoa(r, aux, 2);
 
-	for(i = strlen(aux); i < 16; i++)
+	for (i = strlen(aux); i < 16; i++)
 		strcat(instruction, "0");
 
 	strcat(instruction, aux);
@@ -217,7 +221,7 @@ void printa(char instruction[], int* linha)
 		printf("%c", instruction[i]);
 	}
 	printf("\";");
-	printf("\n\n");
+	printf("\n");
 }
 
 void completaInstruction(char instruction[])
@@ -231,7 +235,7 @@ void completaInstruction(char instruction[])
 		strcat(instruction, "0");
 }
 
-void salvaArquivo(FILE* p, char instruction[], int* linha)
+void salvaArquivo(FILE* p, char instruction[], int* linha, char in[], int reg1, int reg2, int reg3)
 {
 	int i;
 
@@ -252,5 +256,6 @@ void salvaArquivo(FILE* p, char instruction[], int* linha)
 		fprintf(p, "%c", instruction[i]);
 	}
 	fprintf(p, "\";");
+	fprintf(p, "-- %s %i,%i,%i", in, reg1, reg2, reg3);
 	fprintf(p, "\n\n");
 }
