@@ -24,7 +24,13 @@ entity cpu is
 			deb_signals_wb:		out std_logic_vector(0 to 1);
 			deb_imed_ext_ex:		out std_logic_vector(0 to 31);
 			deb_read_data_1:		out std_logic_vector(0 to 31);
-			deb_read_data_2:		out std_logic_vector(0 to 31));
+			deb_read_data_2:		out std_logic_vector(0 to 31);
+			deb_alu_zero:			out std_logic;
+			deb_branch_addr:		out std_logic_vector(0 to 31);
+			deb_and_0:				out std_logic;
+			deb_and_1:				out std_logic;
+			deb_and_res:			out std_logic;
+			deb_pc_update:			out std_logic_vector(0 to 31));
 --			deb_regfile_all_5:	out std_logic_vector(0 to 31);
 --			deb_regfile_all_6:	out std_logic_vector(0 to 31);
 --			deb_regfile_all_7:	out std_logic_vector(0 to 31);
@@ -353,6 +359,12 @@ begin
 	deb_imed_ext_ex <= alusrc_mux_1;
 	deb_read_data_1 <= Read_Data_1;
 	deb_read_data_2 <= Read_Data_2;
+	deb_alu_zero <= ULA_Zero;
+	deb_branch_addr <= Branch_addr;
+	deb_and_0 <= branch_and_0;
+	deb_and_1 <= branch_and_1;
+	deb_and_res <= IsBranch;
+	deb_pc_update <= pc_update;
 	
 	--========== COMPONENTES INSTRUCTION FETCH ==========
 	instruction_memory:	instr_mem			port map (pc_instr_mem, instr_mem_ifid);
