@@ -91,7 +91,7 @@ void main()
 		else if (strcmp(i, "nop") == 0)
 		{
 			strcpy(r, "000000");
-			tipo = 'r';
+			tipo = 'n';
 		}
 		else
 			break;
