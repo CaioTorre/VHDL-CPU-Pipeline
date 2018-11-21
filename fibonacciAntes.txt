@@ -1,0 +1,35 @@
+addi 1,0,0
+addi 2,0,0
+addi 3,0,0
+addi 4,0,1
+addi 5,0,2
+nop
+nop
+beq 3,5,8
+nop
+nop
+nop
+beq 3,4,1
+nop
+nop
+nop
+j 3
+nop
+nop
+addi 1,0,1
+addi 2,0,0
+nop
+nop
+add 1,1,2
+nop
+nop
+sub 2,1,2
+nop
+nop
+addi 3,3,1
+j -8
+nop
+nop
+add 2,0,1
+add 3,0,1
+a
