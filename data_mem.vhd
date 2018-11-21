@@ -18,24 +18,25 @@ architecture imem of data_mem is
 begin
 	--memory(0) <= "00000000000000000000000000000000";
 	--memory(1) <= "01010101010101010101010101010101";
-	memory(0) <= "00000000";
-	memory(1) <= "00000000";
-	memory(2) <= "00000000";
-	memory(3) <= "00000000";
+--	memory(0) <= "00000000";
+--	memory(1) <= "00000000";
+--	memory(2) <= "00000000";
+--	memory(3) <= "00000000";
+--	
+--	memory(4) <= "01010101";
+--	memory(5) <= "01010101";
+--	memory(6) <= "01010101";
+--	memory(7) <= "01010101";
 	
-	memory(4) <= "01010101";
-	memory(5) <= "01010101";
-	memory(6) <= "01010101";
-	memory(7) <= "01010101";
 	process(clock)
 	begin
 		if (clock'EVENT and clock = '1') then
-			--if (mem_write = '1') then
-			--	memory(to_integer(unsigned(address))    ) <= write_data(0  to 7 );
-			--	memory(to_integer(unsigned(address)) + 1) <= write_data(8  to 15);
-			--	memory(to_integer(unsigned(address)) + 2) <= write_data(16 to 23);
-			--	memory(to_integer(unsigned(address)) + 3) <= write_data(24 to 31);
-			--end if;
+			if (mem_write = '1') then
+				memory(to_integer(unsigned(address))    ) <= write_data(0  to 7 );
+				memory(to_integer(unsigned(address)) + 1) <= write_data(8  to 15);
+				memory(to_integer(unsigned(address)) + 2) <= write_data(16 to 23);
+				memory(to_integer(unsigned(address)) + 3) <= write_data(24 to 31);
+			end if;
 			if (mem_read = '1') then 
 				read_data <= 
 					memory(to_integer(unsigned(address))    ) & 
