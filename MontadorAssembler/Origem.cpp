@@ -9,7 +9,7 @@ void converteJ(char[], int);
 void converteJr(char[], int);
 void printa(char[], int*);
 void completaInstruction(char[]);
-void salvaArquivo(FILE*, char[], int*, char[], int reg1, int reg2, int reg3);
+void salvaArquivo(FILE*, char[], int*, char[], int reg1, int reg2, int reg3, int imed, char);
 
 void main()
 {
@@ -94,7 +94,9 @@ void main()
 			tipo = 'n';
 		}
 		else
+		{
 			break;
+		}
 
 		switch (tipo)
 		{
@@ -131,7 +133,7 @@ void main()
 		completaInstruction(r);
 
 		//printa(r, &linha);
-		salvaArquivo(p, r, &linha, i, reg1, reg2, reg3);
+		salvaArquivo(p, r, &linha, i, reg1, reg2, reg3, imed, tipo);
 
 	} while (true);
 
@@ -235,7 +237,7 @@ void completaInstruction(char instruction[])
 		strcat(instruction, "0");
 }
 
-void salvaArquivo(FILE* p, char instruction[], int* linha, char in[], int reg1, int reg2, int reg3)
+void salvaArquivo(FILE* p, char instruction[], int* linha, char in[], int reg1, int reg2, int reg3, int imed, char t)
 {
 	int i;
 
@@ -256,6 +258,25 @@ void salvaArquivo(FILE* p, char instruction[], int* linha, char in[], int reg1, 
 		fprintf(p, "%c", instruction[i]);
 	}
 	fprintf(p, "\";");
-	fprintf(p, "-- %s %i,%i,%i", in, reg1, reg2, reg3);
+	switch (t)
+	{
+	case 'r':
+		fprintf(p, "-- %s %i,%i,%i", in, reg1, reg2, reg3);
+	break;
+	case 'i':
+		fprintf(p, "-- %s %i,%i,%i", in, reg1, reg2, imed);
+	case 'j':
+		fprintf(p, "-- %s %i", in, imed);
+		break;
+	case 'm':
+		fprintf(p, "-- %s %i,%i(%i)", in, reg1, imed, reg2);
+		break;
+	case 'g':
+		fprintf(p, "-- %s %i", in, reg1);
+		break;
+	default:
+		break;
+	}
+	
 	fprintf(p, "\n\n");
 }
