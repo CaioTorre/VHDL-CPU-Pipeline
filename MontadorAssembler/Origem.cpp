@@ -172,7 +172,7 @@ void converteImed(char instruction[], int r)
 
 void converteJ(char instruction[], int r)
 {
-	char aux[30];
+	char aux[26];
 
 	int i;
 
