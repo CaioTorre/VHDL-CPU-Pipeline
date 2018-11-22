@@ -178,10 +178,10 @@ void converteJ(char instruction[], int r)
 
 	_itoa(r, aux, 2);
 
-	for (i = strlen(aux); i < 25; i++)
+	for (i = strlen(aux); i < 26; i++)
 		strcat(instruction, "0");
 
-	strcpy(instruction, aux);
+	strcat(instruction, aux);
 }
 
 void converteJr(char instruction[], int r)
@@ -262,7 +262,7 @@ void salvaArquivo(FILE* p, char instruction[], int* linha, char in[], int reg1, 
 	{
 	case 'r':
 		fprintf(p, "-- %s %i,%i,%i", in, reg1, reg2, reg3);
-	break;
+		break;
 	case 'i':
 		fprintf(p, "-- %s %i,%i,%i", in, reg1, reg2, imed);
 	case 'j':
@@ -277,6 +277,6 @@ void salvaArquivo(FILE* p, char instruction[], int* linha, char in[], int reg1, 
 	default:
 		break;
 	}
-	
+
 	fprintf(p, "\n\n");
 }
