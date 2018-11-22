@@ -9,25 +9,49 @@ entity data_mem is
 			mem_write:	in std_logic;
 			write_data:	in  std_logic_vector(0 to 31);
 			mem_read:	in 	std_logic;
-			read_data:	out std_logic_vector(0 to 31));
+			read_data:	out std_logic_vector(0 to 31);
+			deb_mem_0:	out std_logic_vector(0 to 31);
+			deb_mem_4:	out std_logic_vector(0 to 31);
+			deb_mem_8:	out std_logic_vector(0 to 31);
+			deb_mem_12:	out std_logic_vector(0 to 31);
+			deb_mem_16:	out std_logic_vector(0 to 31));
 end data_mem;
 
 architecture imem of data_mem is
 	type mem_type is array(0 to 100) of std_logic_vector(0 to 7);
 	signal memory: mem_type;
 begin
-	--memory(0) <= "00000000000000000000000000000000";
-	--memory(1) <= "01010101010101010101010101010101";
---	memory(0) <= "00000000";
---	memory(1) <= "00000000";
---	memory(2) <= "00000000";
---	memory(3) <= "00000000";
---	
---	memory(4) <= "01010101";
---	memory(5) <= "01010101";
---	memory(6) <= "01010101";
---	memory(7) <= "01010101";
+
+	deb_mem_0 <= 
+		memory(0) & 
+		memory(1) & 
+		memory(2) & 
+		memory(3);
 	
+	deb_mem_4 <= 
+		memory(4) & 
+		memory(5) & 
+		memory(6) & 
+		memory(7);
+	
+	deb_mem_8 <= 
+		memory(8) & 
+		memory(9) & 
+		memory(10) & 
+		memory(11);
+		
+	deb_mem_12 <= 
+		memory(12) & 
+		memory(13) & 
+		memory(14) & 
+		memory(15);
+		
+	deb_mem_16 <= 
+		memory(16) & 
+		memory(17) & 
+		memory(18) & 
+		memory(19);
+		
 	process(clock)
 	begin
 		if (clock'EVENT and clock = '1') then
